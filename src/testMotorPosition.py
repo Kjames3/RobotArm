@@ -60,24 +60,22 @@ try:
         while True:
             # Move to 180 degrees clockwise
             print("Moving to 180 degrees clockwise")
-            print(f"Current: {current}, Target: {target}, Speed: {speed}")
-            target = PULSES_FOR_180_DEGREES
+            target = initial_count + PULSES_FOR_180_DEGREES
             while True:
-                current = ros.get_motor_encoder()[0]  # Encoder count for motor 1
+                current = ros.get_motor_encoder()[0]
                 if abs(target - current) < 5:  # Within 5 pulses (~3 degrees)
                     break
                 speed = pid.compute(target, current)
                 ros.set_motor(speed, 0, 0, 0)
-                time.sleep(0.01)  # Short delay for smooth control
+                time.sleep(0.01)
             ros.set_motor(0, 0, 0, 0)  # Stop
             print("Reached 180 degrees, stopping for 2 seconds")
             time.sleep(2)
 
             # Move back to 0 degrees counter-clockwise
             print("Moving to 0 degrees counter-clockwise")
-            target = 0
+            target = initial_count
             while True:
-                print(f"Current: {current}, Target: {target}, Speed: {speed}")
                 current = ros.get_motor_encoder()[0]
                 if abs(target - current) < 5:
                     break
