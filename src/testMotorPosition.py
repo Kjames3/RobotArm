@@ -2,7 +2,7 @@ import time
 from Rosmaster_Lib import Rosmaster
 import serial.serialutil
 
-class PidController:
+class PIDController:
     def __init__(self, kp, ki, kd):
         self.kp = kp
         self.ki = ki
