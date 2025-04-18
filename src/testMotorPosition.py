@@ -45,9 +45,13 @@ try:
     ros = Rosmaster()
     print("ROSMaster initialized successfully")
 
-    # Reset encoder to zero
-    ros.reset_motor_encoder()
-    print("Encoder reset to zero")
+    # # Reset encoder to zero
+    # ros.reset_motor_encoder()
+    # print("Encoder reset to zero")
+
+    # Read initial encoder count (for motor 1)
+    initial_count = ros.get_motor_encoder()[0]
+    print(f"Initial encoder count: {initial_count}")
 
     # Initialize PID controller
     pid = PIDController(KP, KI, KD)
@@ -56,6 +60,7 @@ try:
         while True:
             # Move to 180 degrees clockwise
             print("Moving to 180 degrees clockwise")
+            print(f"Current: {current}, Target: {target}, Speed: {speed}")
             target = PULSES_FOR_180_DEGREES
             while True:
                 current = ros.get_motor_encoder()[0]  # Encoder count for motor 1
@@ -72,6 +77,7 @@ try:
             print("Moving to 0 degrees counter-clockwise")
             target = 0
             while True:
+                print(f"Current: {current}, Target: {target}, Speed: {speed}")
                 current = ros.get_motor_encoder()[0]
                 if abs(target - current) < 5:
                     break
