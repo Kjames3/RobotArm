@@ -12,10 +12,9 @@ class PIDController:
         self.last_time = time.time()
 
     def compute(self, setpoint, measured_value):
-        curent_time = time.time()
-        dt = curent_time - self.last_time
-        # Prevent division by zero
-        if dt == 0:
+        current_time = time.time()
+        dt = current_time - self.last_time
+        if dt == 0:  # Prevent division by zero
             return 0
 
         error = setpoint - measured_value
@@ -24,30 +23,29 @@ class PIDController:
 
         output = self.kp * error + self.ki * self.integral + self.kd * derivative
         self.prev_error = error
-        self.last_time = curent_time
+        self.last_time = current_time
 
-        # Cap the output motor speed to the range [-100, 100]
+        # Cap output to motor speed range (-100 to 100)
         return max(min(output, 100), -100)
 
-# Encoder settings
-PULSES_PER_REVOLUTION = 748
+# Encoder settings (adjust based on motor specs)
+PULSES_PER_REVOLUTION = 748  # Adjust this based on your motor's specifications
 DEGREES_PER_PULSE = 360 / PULSES_PER_REVOLUTION
-PULSES_FOR_180_DEGREES = int(180 / DEGREES_PER_PULSE)
+PULSES_FOR_180_DEGREES = int(180 / DEGREES_PER_PULSE)  # ~374 pulses
 
-# PID parameters (I need to figure these out again)
-KP = 0.1
-KI = 0.01
-KD = 0.05
+# PID parameters (tuned for responsiveness)
+KP = 1.0  # Increased for stronger response
+KI = 0.01  # Small to reduce steady-state error
+KD = 0.05  # Small damping to prevent oscillations
+
+# Timeout in seconds to prevent infinite spinning
+TIMEOUT = 10
 
 try:
     # Initialize Rosmaster
     print("Initializing ROSMaster...")
     ros = Rosmaster()
     print("ROSMaster initialized successfully")
-
-    # # Reset encoder to zero
-    # ros.reset_motor_encoder()
-    # print("Encoder reset to zero")
 
     # Read initial encoder count (for motor 1)
     initial_count = ros.get_motor_encoder()[0]
@@ -61,9 +59,15 @@ try:
             # Move to 180 degrees clockwise
             print("Moving to 180 degrees clockwise")
             target = initial_count + PULSES_FOR_180_DEGREES
+            start_time = time.time()
             while True:
                 current = ros.get_motor_encoder()[0]
-                if abs(target - current) < 5:  # Within 5 pulses (~3 degrees)
+                error = target - current
+                print(f"Current: {current}, Target: {target}, Error: {error}")  # Debug print
+                if abs(error) < 5:  # Within 5 pulses (~3 degrees)
+                    break
+                if time.time() - start_time > TIMEOUT:
+                    print("Timeout reached, stopping motor")
                     break
                 speed = pid.compute(target, current)
                 ros.set_motor(speed, 0, 0, 0)
@@ -75,9 +79,15 @@ try:
             # Move back to 0 degrees counter-clockwise
             print("Moving to 0 degrees counter-clockwise")
             target = initial_count
+            start_time = time.time()
             while True:
                 current = ros.get_motor_encoder()[0]
-                if abs(target - current) < 5:
+                error = target - current
+                print(f"Current: {current}, Target: {target}, Error: {error}")  # Debug print
+                if abs(error) < 5:
+                    break
+                if time.time() - start_time > TIMEOUT:
+                    print("Timeout reached, stopping motor")
                     break
                 speed = pid.compute(target, current)
                 ros.set_motor(speed, 0, 0, 0)
