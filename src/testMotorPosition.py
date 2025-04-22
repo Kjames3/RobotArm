@@ -61,9 +61,9 @@ try:
             target = initial_count + PULSES_FOR_180_DEGREES
             start_time = time.time()
             while True:
-                current = ros.get_motor_encoder()[0]
+                current = ros.get_motor_encoder()
                 error = target - current
-                print(f"Current: {current}, Target: {target}, Error: {error}")  # Debug print
+                print(f"Speed: {speed}, Current: {current}, Target: {target}, Error: {error}")  # Debug print
                 if abs(error) < 5:  # Within 5 pulses (~3 degrees)
                     break
                 if time.time() - start_time > TIMEOUT:
@@ -83,7 +83,7 @@ try:
             while True:
                 current = ros.get_motor_encoder()[0]
                 error = target - current
-                print(f"Current: {current}, Target: {target}, Error: {error}")  # Debug print
+                print(f"Speed: {speed}, Current: {current}, Target: {target}, Error: {error}")  # Debug print
                 if abs(error) < 5:
                     break
                 if time.time() - start_time > TIMEOUT:
