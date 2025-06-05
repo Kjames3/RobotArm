@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LX16A Servo Control</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.150.1/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/urdf-loader@0.10.5/dist/URDFLoader.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>LX16A Servo Control Panel</h1>
+        <div id="urdf-viewer" style="width:100%;height:400px;margin:auto;"></div>
+        <div class="servo-container" id="servo-container">
+            <!-- Servo controls will be dynamically generated here -->
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

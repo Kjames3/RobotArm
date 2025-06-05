@@ -1,0 +1,150 @@
+2025-06-01 23:27:06,414 - INFO - Successfully initialized servo controller on COM4
+2025-06-01 23:27:06,415 - INFO - Starting robot arm GUI application
+2025-06-01 23:27:06,451 - DEBUG - Input frame created
+2025-06-01 23:27:06,452 - DEBUG - Servo frame created with 6 sliders
+2025-06-01 23:27:06,453 - DEBUG - Position frame created
+2025-06-01 23:27:06,453 - DEBUG - IK equation frame created
+2025-06-01 23:27:06,453 - INFO - GUI initialized
+2025-06-01 23:27:06,453 - DEBUG - Sending servo control packet: [85, 85, 1, 3, 28, 223]
+2025-06-01 23:27:06,458 - DEBUG - Sending servo control packet: [85, 85, 1, 3, 26, 225]
+2025-06-01 23:27:06,463 - DEBUG - Sending servo control packet: [85, 85, 1, 3, 25, 226]
+2025-06-01 23:27:06,468 - DEBUG - Sending servo control packet: [85, 85, 1, 3, 27, 224]
+2025-06-01 23:27:06,474 - DEBUG - Sending servo control packet: [85, 85, 1, 3, 36, 215]
+2025-06-01 23:27:06,478 - DEBUG - Updated servo 1: position=747, temp=37°C, voltage=12420mV
+2025-06-01 23:27:06,479 - DEBUG - Sending servo control packet: [85, 85, 2, 3, 28, 222]
+2025-06-01 23:27:06,483 - DEBUG - Sending servo control packet: [85, 85, 2, 3, 26, 224]
+2025-06-01 23:27:06,488 - DEBUG - Sending servo control packet: [85, 85, 2, 3, 25, 225]
+2025-06-01 23:27:06,492 - DEBUG - Sending servo control packet: [85, 85, 2, 3, 27, 223]
+2025-06-01 23:27:06,497 - DEBUG - Sending servo control packet: [85, 85, 2, 3, 36, 214]
+2025-06-01 23:27:06,502 - DEBUG - Updated servo 2: position=750, temp=38°C, voltage=12420mV
+2025-06-01 23:27:06,502 - DEBUG - Sending servo control packet: [85, 85, 3, 3, 28, 221]
+2025-06-01 23:27:06,507 - DEBUG - Sending servo control packet: [85, 85, 3, 3, 26, 223]
+2025-06-01 23:27:06,512 - DEBUG - Sending servo control packet: [85, 85, 3, 3, 25, 224]
+2025-06-01 23:27:06,517 - DEBUG - Sending servo control packet: [85, 85, 3, 3, 27, 222]
+2025-06-01 23:27:06,521 - DEBUG - Sending servo control packet: [85, 85, 3, 3, 36, 213]
+2025-06-01 23:27:06,525 - DEBUG - Updated servo 3: position=495, temp=37°C, voltage=12420mV
+2025-06-01 23:27:06,525 - DEBUG - Sending servo control packet: [85, 85, 4, 3, 28, 220]
+2025-06-01 23:27:06,530 - DEBUG - Sending servo control packet: [85, 85, 4, 3, 26, 222]
+2025-06-01 23:27:06,535 - DEBUG - Sending servo control packet: [85, 85, 4, 3, 25, 223]
+2025-06-01 23:27:06,540 - DEBUG - Sending servo control packet: [85, 85, 4, 3, 27, 221]
+2025-06-01 23:27:06,544 - DEBUG - Sending servo control packet: [85, 85, 4, 3, 36, 212]
+2025-06-01 23:27:06,548 - DEBUG - Updated servo 4: position=392, temp=37°C, voltage=12349mV
+2025-06-01 23:27:06,549 - DEBUG - Sending servo control packet: [85, 85, 5, 3, 28, 219]
+2025-06-01 23:27:06,554 - DEBUG - Sending servo control packet: [85, 85, 5, 3, 26, 221]
+2025-06-01 23:27:06,558 - DEBUG - Sending servo control packet: [85, 85, 5, 3, 25, 222]
+2025-06-01 23:27:06,562 - DEBUG - Sending servo control packet: [85, 85, 5, 3, 27, 220]
+2025-06-01 23:27:06,567 - DEBUG - Sending servo control packet: [85, 85, 5, 3, 36, 211]
+2025-06-01 23:27:06,572 - DEBUG - Updated servo 5: position=1000, temp=36°C, voltage=12420mV
+2025-06-01 23:27:06,572 - DEBUG - Sending servo control packet: [85, 85, 6, 3, 28, 218]
+2025-06-01 23:27:06,577 - DEBUG - Sending servo control packet: [85, 85, 6, 3, 26, 220]
+2025-06-01 23:27:06,582 - DEBUG - Sending servo control packet: [85, 85, 6, 3, 25, 221]
+2025-06-01 23:27:06,586 - DEBUG - Sending servo control packet: [85, 85, 6, 3, 27, 219]
+2025-06-01 23:27:06,592 - DEBUG - Sending servo control packet: [85, 85, 6, 3, 36, 210]
+2025-06-01 23:27:06,597 - DEBUG - Updated servo 6: position=606, temp=46°C, voltage=12376mV
+2025-06-01 23:27:06,597 - DEBUG - Sending servo control packet: [85, 85, 1, 3, 28, 223]
+2025-06-01 23:27:06,602 - DEBUG - Sending servo control packet: [85, 85, 2, 3, 28, 222]
+2025-06-01 23:27:06,607 - DEBUG - Sending servo control packet: [85, 85, 3, 3, 28, 221]
+2025-06-01 23:27:06,612 - DEBUG - Sending servo control packet: [85, 85, 4, 3, 28, 220]
+2025-06-01 23:27:06,616 - DEBUG - Sending servo control packet: [85, 85, 5, 3, 28, 219]
+2025-06-01 23:27:06,621 - DEBUG - Converted positions [747, 750, 495, 392, 1000] to theta_rad [0.19674621 0.9680489  1.5616505  1.56003745 3.14159265]
+2025-06-01 23:27:06,622 - DEBUG - Updated current position: [-1.59977569e+02  2.35487925e+02  5.51091060e-15]
+2025-06-01 23:27:06,622 - DEBUG - Updated target position: [0. 0. 0.]
+2025-06-01 23:27:06,712 - DEBUG - Sending servo control packet: [85, 85, 6, 7, 1, 94, 2, 232, 3, 166]
+2025-06-01 23:27:06,712 - INFO - Manually moved servo 6 to position 606
+2025-06-01 23:27:06,715 - DEBUG - Sending servo control packet: [85, 85, 5, 7, 1, 232, 3, 232, 3, 28]
+2025-06-01 23:27:06,715 - INFO - Manually moved servo 5 to position 1000
+2025-06-01 23:27:06,716 - DEBUG - Sending servo control packet: [85, 85, 4, 7, 1, 136, 1, 232, 3, 127]
+2025-06-01 23:27:06,716 - INFO - Manually moved servo 4 to position 392
+2025-06-01 23:27:06,717 - DEBUG - Sending servo control packet: [85, 85, 3, 7, 1, 239, 1, 232, 3, 25]
+2025-06-01 23:27:06,717 - INFO - Manually moved servo 3 to position 495
+2025-06-01 23:27:06,719 - DEBUG - Sending servo control packet: [85, 85, 2, 7, 1, 238, 2, 232, 3, 26]
+2025-06-01 23:27:06,719 - INFO - Manually moved servo 2 to position 750
+2025-06-01 23:27:06,720 - DEBUG - Sending servo control packet: [85, 85, 1, 7, 1, 235, 2, 232, 3, 30]
+2025-06-01 23:27:06,720 - INFO - Manually moved servo 1 to position 747
+2025-06-01 23:27:07,122 - DEBUG - Sending servo control packet: [85, 85, 1, 3, 28, 223]
+2025-06-01 23:27:07,126 - DEBUG - Sending servo control packet: [85, 85, 1, 3, 26, 225]
+2025-06-01 23:27:07,132 - DEBUG - Sending servo control packet: [85, 85, 1, 3, 25, 226]
+2025-06-01 23:27:07,136 - DEBUG - Sending servo control packet: [85, 85, 1, 3, 27, 224]
+2025-06-01 23:27:07,142 - DEBUG - Sending servo control packet: [85, 85, 1, 3, 36, 215]
+2025-06-01 23:27:07,147 - DEBUG - Updated servo 1: position=747, temp=37°C, voltage=12420mV
+2025-06-01 23:27:07,147 - DEBUG - Sending servo control packet: [85, 85, 2, 3, 28, 222]
+2025-06-01 23:27:07,153 - DEBUG - Sending servo control packet: [85, 85, 2, 3, 26, 224]
+2025-06-01 23:27:07,157 - DEBUG - Sending servo control packet: [85, 85, 2, 3, 25, 225]
+2025-06-01 23:27:07,162 - DEBUG - Sending servo control packet: [85, 85, 2, 3, 27, 223]
+2025-06-01 23:27:07,166 - DEBUG - Sending servo control packet: [85, 85, 2, 3, 36, 214]
+2025-06-01 23:27:07,170 - DEBUG - Updated servo 2: position=750, temp=38°C, voltage=12420mV
+2025-06-01 23:27:07,171 - DEBUG - Sending servo control packet: [85, 85, 3, 3, 28, 221]
+2025-06-01 23:27:07,174 - DEBUG - Sending servo control packet: [85, 85, 3, 3, 26, 223]
+2025-06-01 23:27:07,180 - DEBUG - Sending servo control packet: [85, 85, 3, 3, 25, 224]
+2025-06-01 23:27:07,184 - DEBUG - Sending servo control packet: [85, 85, 3, 3, 27, 222]
+2025-06-01 23:27:07,189 - DEBUG - Sending servo control packet: [85, 85, 3, 3, 36, 213]
+2025-06-01 23:27:07,194 - DEBUG - Updated servo 3: position=495, temp=37°C, voltage=12420mV
+2025-06-01 23:27:07,194 - DEBUG - Sending servo control packet: [85, 85, 4, 3, 28, 220]
+2025-06-01 23:27:07,199 - DEBUG - Sending servo control packet: [85, 85, 4, 3, 26, 222]
+2025-06-01 23:27:07,204 - DEBUG - Sending servo control packet: [85, 85, 4, 3, 25, 223]
+2025-06-01 23:27:07,208 - DEBUG - Sending servo control packet: [85, 85, 4, 3, 27, 221]
+2025-06-01 23:27:07,212 - DEBUG - Sending servo control packet: [85, 85, 4, 3, 36, 212]
+2025-06-01 23:27:07,217 - DEBUG - Updated servo 4: position=392, temp=37°C, voltage=12347mV
+2025-06-01 23:27:07,217 - DEBUG - Sending servo control packet: [85, 85, 5, 3, 28, 219]
+2025-06-01 23:27:07,223 - DEBUG - Sending servo control packet: [85, 85, 5, 3, 26, 221]
+2025-06-01 23:27:07,228 - DEBUG - Sending servo control packet: [85, 85, 5, 3, 25, 222]
+2025-06-01 23:27:07,232 - DEBUG - Sending servo control packet: [85, 85, 5, 3, 27, 220]
+2025-06-01 23:27:07,237 - DEBUG - Sending servo control packet: [85, 85, 5, 3, 36, 211]
+2025-06-01 23:27:07,241 - DEBUG - Updated servo 5: position=1000, temp=36°C, voltage=12420mV
+2025-06-01 23:27:07,242 - DEBUG - Sending servo control packet: [85, 85, 6, 3, 28, 218]
+2025-06-01 23:27:07,246 - DEBUG - Sending servo control packet: [85, 85, 6, 3, 26, 220]
+2025-06-01 23:27:07,251 - DEBUG - Sending servo control packet: [85, 85, 6, 3, 25, 221]
+2025-06-01 23:27:07,256 - DEBUG - Sending servo control packet: [85, 85, 6, 3, 27, 219]
+2025-06-01 23:27:07,260 - DEBUG - Sending servo control packet: [85, 85, 6, 3, 36, 210]
+2025-06-01 23:27:07,264 - DEBUG - Updated servo 6: position=606, temp=46°C, voltage=12376mV
+2025-06-01 23:27:07,265 - DEBUG - Sending servo control packet: [85, 85, 1, 3, 28, 223]
+2025-06-01 23:27:07,271 - DEBUG - Sending servo control packet: [85, 85, 2, 3, 28, 222]
+2025-06-01 23:27:07,276 - DEBUG - Sending servo control packet: [85, 85, 3, 3, 28, 221]
+2025-06-01 23:27:07,281 - DEBUG - Sending servo control packet: [85, 85, 4, 3, 28, 220]
+2025-06-01 23:27:07,285 - DEBUG - Sending servo control packet: [85, 85, 5, 3, 28, 219]
+2025-06-01 23:27:07,290 - DEBUG - Converted positions [748, 750, 495, 392, 1000] to theta_rad [0.19991953 0.9680489  1.5616505  1.56003745 3.14159265]
+2025-06-01 23:27:07,291 - DEBUG - Updated current position: [-1.60724043e+02  2.34979079e+02  5.51091060e-15]
+2025-06-01 23:27:07,291 - DEBUG - Updated target position: [0. 0. 0.]
+2025-06-01 23:27:07,720 - DEBUG - Reset manual control for servo 6
+2025-06-01 23:27:07,720 - DEBUG - Reset manual control for servo 5
+2025-06-01 23:27:07,720 - DEBUG - Reset manual control for servo 4
+2025-06-01 23:27:07,720 - DEBUG - Reset manual control for servo 3
+2025-06-01 23:27:07,721 - DEBUG - Reset manual control for servo 2
+2025-06-01 23:27:07,721 - DEBUG - Reset manual control for servo 1
+2025-06-01 23:27:07,799 - DEBUG - Sending servo control packet: [85, 85, 1, 3, 28, 223]
+2025-06-01 23:27:07,804 - DEBUG - Sending servo control packet: [85, 85, 1, 3, 26, 225]
+2025-06-01 23:27:07,808 - DEBUG - Sending servo control packet: [85, 85, 1, 3, 25, 226]
+2025-06-01 23:27:07,814 - DEBUG - Sending servo control packet: [85, 85, 1, 3, 27, 224]
+2025-06-01 23:27:07,818 - DEBUG - Sending servo control packet: [85, 85, 1, 3, 36, 215]
+2025-06-01 23:27:07,823 - DEBUG - Updated servo 1: position=747, temp=37°C, voltage=12420mV
+2025-06-01 23:27:07,824 - DEBUG - Sending servo control packet: [85, 85, 2, 3, 28, 222]
+2025-06-01 23:27:07,830 - DEBUG - Sending servo control packet: [85, 85, 2, 3, 26, 224]
+2025-06-01 23:27:07,834 - DEBUG - Sending servo control packet: [85, 85, 2, 3, 25, 225]
+2025-06-01 23:27:07,839 - DEBUG - Sending servo control packet: [85, 85, 2, 3, 27, 223]
+2025-06-01 23:27:07,844 - DEBUG - Sending servo control packet: [85, 85, 2, 3, 36, 214]
+2025-06-01 23:27:07,849 - DEBUG - Updated servo 2: position=750, temp=38°C, voltage=12420mV
+2025-06-01 23:27:07,849 - DEBUG - Sending servo control packet: [85, 85, 3, 3, 28, 221]
+2025-06-01 23:27:07,854 - DEBUG - Sending servo control packet: [85, 85, 3, 3, 26, 223]
+2025-06-01 23:27:07,859 - DEBUG - Sending servo control packet: [85, 85, 3, 3, 25, 224]
+2025-06-01 23:27:07,863 - DEBUG - Sending servo control packet: [85, 85, 3, 3, 27, 222]
+2025-06-01 23:27:07,868 - DEBUG - Sending servo control packet: [85, 85, 3, 3, 36, 213]
+2025-06-01 23:27:07,873 - DEBUG - Updated servo 3: position=495, temp=37°C, voltage=12420mV
+2025-06-01 23:27:07,874 - DEBUG - Sending servo control packet: [85, 85, 4, 3, 28, 220]
+2025-06-01 23:27:07,878 - DEBUG - Sending servo control packet: [85, 85, 4, 3, 26, 222]
+2025-06-01 23:27:07,882 - DEBUG - Sending servo control packet: [85, 85, 4, 3, 25, 223]
+2025-06-01 23:27:07,887 - DEBUG - Sending servo control packet: [85, 85, 4, 3, 27, 221]
+2025-06-01 23:27:07,892 - DEBUG - Sending servo control packet: [85, 85, 4, 3, 36, 212]
+2025-06-01 23:27:07,897 - DEBUG - Updated servo 4: position=392, temp=37°C, voltage=12351mV
+2025-06-01 23:27:07,897 - DEBUG - Sending servo control packet: [85, 85, 5, 3, 28, 219]
+2025-06-01 23:27:07,903 - DEBUG - Sending servo control packet: [85, 85, 5, 3, 26, 221]
+2025-06-01 23:27:07,908 - DEBUG - Sending servo control packet: [85, 85, 5, 3, 25, 222]
+2025-06-01 23:27:07,913 - DEBUG - Sending servo control packet: [85, 85, 5, 3, 27, 220]
+2025-06-01 23:27:07,918 - DEBUG - Sending servo control packet: [85, 85, 5, 3, 36, 211]
+2025-06-01 23:27:07,924 - DEBUG - Updated servo 5: position=1000, temp=36°C, voltage=12420mV
+2025-06-01 23:27:07,924 - DEBUG - Sending servo control packet: [85, 85, 6, 3, 28, 218]
+2025-06-01 23:27:07,928 - DEBUG - Sending servo control packet: [85, 85, 6, 3, 26, 220]
+2025-06-01 23:27:07,934 - DEBUG - Sending servo control packet: [85, 85, 6, 3, 25, 221]
+2025-06-01 23:27:07,940 - DEBUG - Sending servo control packet: [85, 85, 6, 3, 27, 219]
+2025-06-01 23:27:07,945 - DEBUG - Sending servo control packet: [85, 85, 6, 3, 36, 210]
+2025-06-01 23:27:07,950 - DEBUG - Updated servo 6: position=606, temp=46°C, voltage=12376mV
+2025-06-01 23:27:07,950 - DEBUG - Sending servo control packet: [85, 85, 1, 3, 28, 223]

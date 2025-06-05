@@ -1,0 +1,9 @@
+2025-06-01 23:27:15,084 - DEBUG - Updated servo 6: position=606, temp=46°C, voltage=12376mV
+2025-06-01 23:27:15,084 - DEBUG - Sending servo control packet: [85, 85, 1, 3, 28, 223]
+2025-06-01 23:27:15,088 - DEBUG - Sending servo control packet: [85, 85, 2, 3, 28, 222]
+2025-06-01 23:27:15,094 - DEBUG - Sending servo control packet: [85, 85, 3, 3, 28, 221]
+2025-06-01 23:27:15,098 - DEBUG - Sending servo control packet: [85, 85, 4, 3, 28, 220]
+2025-06-01 23:27:15,103 - DEBUG - Sending servo control packet: [85, 85, 5, 3, 28, 219]
+2025-06-01 23:27:15,109 - DEBUG - Converted positions [748, 750, 495, 392, 1000] to theta_rad [0.19991953 0.9680489  1.5616505  1.56003745 3.14159265]
+2025-06-01 23:27:15,110 - DEBUG - Updated current position: [-1.60724043e+02  2.34979079e+02  5.51091060e-15]
+2025-06-01 23:27:15,110 - DEBUG - Updated target position: [-200.  200.    0.]

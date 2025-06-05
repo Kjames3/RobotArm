@@ -1,0 +1,150 @@
+2025-06-01 23:27:13,229 - DEBUG - Iteration 190: Position error 0.003169538099897252 mm
+2025-06-01 23:27:13,229 - DEBUG - Computed Jacobian for theta_rad [ 1.57079633  1.08724181  0.0052399  -0.34441231  0.        ]
+2025-06-01 23:27:13,229 - DEBUG - Converted theta_rad [ 1.57079689  1.08724237  0.00523989 -0.34441216  0.        ] to positions [1180.0, 782.628795740623, 154.64585412354506, 37.97619984843939, 500.0]
+2025-06-01 23:27:13,229 - DEBUG - Computed positions: [1180.0, 782.628795740623, 154.64585412354506, 37.97619984843939, 500.0]
+2025-06-01 23:27:13,230 - DEBUG - Converted positions [1180.0, 782.628795740623, 154.64585412354506, 37.97619984843939, 500.0] to theta_rad [ 1.57079633  1.08724237  0.00523989 -0.34441216  0.        ]
+2025-06-01 23:27:13,230 - DEBUG - Iteration 191: Position error 0.003011189551925668 mm
+2025-06-01 23:27:13,230 - DEBUG - Computed Jacobian for theta_rad [ 1.57079633  1.08724237  0.00523989 -0.34441216  0.        ]
+2025-06-01 23:27:13,230 - DEBUG - Converted theta_rad [ 1.57079686  1.0872429   0.0052399  -0.34441203  0.        ] to positions [1180.0, 782.628941136448, 154.6458554702038, 37.976224462222376, 500.0]
+2025-06-01 23:27:13,230 - DEBUG - Computed positions: [1180.0, 782.628941136448, 154.6458554702038, 37.976224462222376, 500.0]
+2025-06-01 23:27:13,230 - DEBUG - Converted positions [1180.0, 782.628941136448, 154.6458554702038, 37.976224462222376, 500.0] to theta_rad [ 1.57079633  1.0872429   0.0052399  -0.34441203  0.        ]
+2025-06-01 23:27:13,231 - DEBUG - Iteration 192: Position error 0.002860184296354129 mm
+2025-06-01 23:27:13,231 - DEBUG - Computed Jacobian for theta_rad [ 1.57079633  1.0872429   0.0052399  -0.34441203  0.        ]
+2025-06-01 23:27:13,231 - DEBUG - Converted theta_rad [ 1.57079683  1.0872434   0.00523991 -0.34441191  0.        ] to positions [1180.0, 782.6290786738331, 154.64585856571136, 37.97624582106576, 500.0]
+2025-06-01 23:27:13,232 - DEBUG - Computed positions: [1180.0, 782.6290786738331, 154.64585856571136, 37.97624582106576, 500.0]
+2025-06-01 23:27:13,232 - DEBUG - Converted positions [1180.0, 782.6290786738331, 154.64585856571136, 37.97624582106576, 500.0] to theta_rad [ 1.57079633  1.0872434   0.00523991 -0.34441191  0.        ]
+2025-06-01 23:27:13,232 - DEBUG - Iteration 193: Position error 0.0027161770220517872 mm
+2025-06-01 23:27:13,232 - DEBUG - Computed Jacobian for theta_rad [ 1.57079633  1.0872434   0.00523991 -0.34441191  0.        ]
+2025-06-01 23:27:13,232 - DEBUG - Converted theta_rad [ 1.5707968   1.08724388  0.00523994 -0.34441181  0.        ] to positions [1180.0, 782.6292087151068, 154.645863332595, 37.97626420935717, 500.0]
+2025-06-01 23:27:13,232 - DEBUG - Computed positions: [1180.0, 782.6292087151068, 154.645863332595, 37.97626420935717, 500.0]
+2025-06-01 23:27:13,234 - DEBUG - Converted positions [1180.0, 782.6292087151068, 154.645863332595, 37.97626420935717, 500.0] to theta_rad [ 1.57079633  1.08724388  0.00523994 -0.34441181  0.        ]
+2025-06-01 23:27:13,234 - DEBUG - Iteration 194: Position error 0.002578839942326843 mm
+2025-06-01 23:27:13,234 - DEBUG - Computed Jacobian for theta_rad [ 1.57079633  1.08724388  0.00523994 -0.34441181  0.        ]
+2025-06-01 23:27:13,234 - DEBUG - Converted theta_rad [ 1.57079678  1.08724433  0.00523996 -0.34441173  0.        ] to positions [1180.0, 782.6293316057538, 154.6458696971647, 37.97627988472192, 500.0]
+2025-06-01 23:27:13,235 - DEBUG - Computed positions: [1180.0, 782.6293316057538, 154.6458696971647, 37.97627988472192, 500.0]
+2025-06-01 23:27:13,235 - DEBUG - Converted positions [1180.0, 782.6293316057538, 154.6458696971647, 37.97627988472192, 500.0] to theta_rad [ 1.57079633  1.08724433  0.00523996 -0.34441173  0.        ]
+2025-06-01 23:27:13,235 - DEBUG - Iteration 195: Position error 0.002447860973102893 mm
+2025-06-01 23:27:13,235 - DEBUG - Computed Jacobian for theta_rad [ 1.57079633  1.08724433  0.00523996 -0.34441173  0.        ]
+2025-06-01 23:27:13,236 - DEBUG - Converted theta_rad [ 1.57079675  1.08724475  0.00524    -0.34441166  0.        ] to positions [1180.0, 782.6294476757431, 154.64587758844516, 37.97629308098925, 500.0]
+2025-06-01 23:27:13,236 - DEBUG - Computed positions: [1180.0, 782.6294476757431, 154.64587758844516, 37.97629308098925, 500.0]
+2025-06-01 23:27:13,236 - DEBUG - Converted positions [1180.0, 782.6294476757431, 154.64587758844516, 37.97629308098925, 500.0] to theta_rad [ 1.57079633  1.08724475  0.00524    -0.34441166  0.        ]
+2025-06-01 23:27:13,236 - DEBUG - Iteration 196: Position error 0.002322942918912256 mm
+2025-06-01 23:27:13,237 - DEBUG - Computed Jacobian for theta_rad [ 1.57079633  1.08724475  0.00524    -0.34441166  0.        ]
+2025-06-01 23:27:13,237 - DEBUG - Converted theta_rad [ 1.57079673  1.08724515  0.00524004 -0.3444116   0.        ] to positions [1180.0, 782.629557239579, 154.64588693790176, 37.97630401057282, 500.0]
+2025-06-01 23:27:13,237 - DEBUG - Computed positions: [1180.0, 782.629557239579, 154.64588693790176, 37.97630401057282, 500.0]
+2025-06-01 23:27:13,237 - DEBUG - Converted positions [1180.0, 782.629557239579, 154.64588693790176, 37.97630401057282, 500.0] to theta_rad [ 1.57079633  1.08724515  0.00524004 -0.3444116   0.        ]
+2025-06-01 23:27:13,238 - DEBUG - Iteration 197: Position error 0.0022038034834367917 mm
+2025-06-01 23:27:13,238 - DEBUG - Computed Jacobian for theta_rad [ 1.57079633  1.08724515  0.00524004 -0.3444116   0.        ]
+2025-06-01 23:27:13,238 - DEBUG - Converted theta_rad [ 1.5707967   1.08724553  0.00524009 -0.34441155  0.        ] to positions [1180.0, 782.6296605973691, 154.6458976813371, 37.97631286570919, 500.0]
+2025-06-01 23:27:13,238 - DEBUG - Computed positions: [1180.0, 782.6296605973691, 154.6458976813371, 37.97631286570919, 500.0]
+2025-06-01 23:27:13,238 - DEBUG - Converted positions [1180.0, 782.6296605973691, 154.6458976813371, 37.97631286570919, 500.0] to theta_rad [ 1.57079633  1.08724553  0.00524009 -0.34441155  0.        ]
+2025-06-01 23:27:13,238 - DEBUG - Iteration 198: Position error 0.002090172848490873 mm
+2025-06-01 23:27:13,239 - DEBUG - Computed Jacobian for theta_rad [ 1.57079633  1.08724553  0.00524009 -0.34441155  0.        ]
+2025-06-01 23:27:13,239 - DEBUG - Converted theta_rad [ 1.57079668  1.08724589  0.00524015 -0.34441151  0.        ] to positions [1180.0, 782.6297580351511, 154.6459097562538, 37.97631982140413, 500.0]
+2025-06-01 23:27:13,239 - DEBUG - Computed positions: [1180.0, 782.6297580351511, 154.6459097562538, 37.97631982140413, 500.0]
+2025-06-01 23:27:13,239 - DEBUG - Converted positions [1180.0, 782.6297580351511, 154.6459097562538, 37.97631982140413, 500.0] to theta_rad [ 1.57079633  1.08724589  0.00524015 -0.34441151  0.        ]
+2025-06-01 23:27:13,240 - DEBUG - Iteration 199: Position error 0.0019817949640354264 mm
+2025-06-01 23:27:13,240 - DEBUG - Computed Jacobian for theta_rad [ 1.57079633  1.08724589  0.00524015 -0.34441151  0.        ]
+2025-06-01 23:27:13,240 - DEBUG - Converted theta_rad [ 1.57079666  1.08724622  0.00524021 -0.34441148  0.        ] to positions [1180.0, 782.629849825745, 154.64592310329414, 37.97632503647682, 500.0]
+2025-06-01 23:27:13,240 - DEBUG - Computed positions: [1180.0, 782.629849825745, 154.64592310329414, 37.97632503647682, 500.0]
+2025-06-01 23:27:13,240 - DEBUG - Converted positions [1180.0, 782.629849825745, 154.64592310329414, 37.97632503647682, 500.0] to theta_rad [ 1.57079633  1.08724622  0.00524021 -0.34441148  0.        ]
+2025-06-01 23:27:13,242 - WARNING - IK did not converge. Final error: 0.0019817949640354264 mm
+2025-06-01 23:27:13,242 - DEBUG - Converted theta_rad [ 1.57079633  1.08724622  0.00524021 -0.34441148  0.        ] to positions [1180.0, 782.629849825745, 154.64592310329414, 37.97632503647682, 500.0]
+2025-06-01 23:27:13,242 - INFO - IK returning positions: [1180.0, 782.629849825745, 154.64592310329414, 37.97632503647682, 500.0]
+2025-06-01 23:27:13,242 - DEBUG - Converted theta_rad [1180.0, 782.629849825745, 154.64592310329414, 37.97632503647682, 500.0] to positions [1180.0, 915.0, 497.0, 394.0, 1000.0]
+2025-06-01 23:27:13,242 - DEBUG - Sending servo control packet: [85, 85, 1, 7, 1, 232, 3, 232, 3, 32]
+2025-06-01 23:27:13,243 - DEBUG - Moving servo 1 to position 1180
+2025-06-01 23:27:13,243 - DEBUG - Sending servo control packet: [85, 85, 2, 7, 1, 147, 3, 232, 3, 116]
+2025-06-01 23:27:13,243 - DEBUG - Moving servo 2 to position 915
+2025-06-01 23:27:13,243 - DEBUG - Sending servo control packet: [85, 85, 3, 7, 1, 241, 1, 232, 3, 23]
+2025-06-01 23:27:13,244 - DEBUG - Moving servo 3 to position 497
+2025-06-01 23:27:13,244 - DEBUG - Sending servo control packet: [85, 85, 4, 7, 1, 138, 1, 232, 3, 125]
+2025-06-01 23:27:13,244 - DEBUG - Moving servo 4 to position 394
+2025-06-01 23:27:13,245 - DEBUG - Sending servo control packet: [85, 85, 5, 7, 1, 232, 3, 232, 3, 28]
+2025-06-01 23:27:13,245 - DEBUG - Moving servo 5 to position 1000
+2025-06-01 23:27:13,245 - DEBUG - Sending servo control packet: [85, 85, 6, 7, 1, 95, 2, 232, 3, 165]
+2025-06-01 23:27:13,246 - DEBUG - Set gripper to position 607
+2025-06-01 23:27:14,253 - INFO - Movement completed
+2025-06-01 23:27:14,254 - DEBUG - Sending servo control packet: [85, 85, 1, 3, 28, 223]
+2025-06-01 23:27:14,260 - DEBUG - Sending servo control packet: [85, 85, 1, 3, 26, 225]
+2025-06-01 23:27:14,264 - DEBUG - Sending servo control packet: [85, 85, 1, 3, 25, 226]
+2025-06-01 23:27:14,268 - DEBUG - Sending servo control packet: [85, 85, 1, 3, 27, 224]
+2025-06-01 23:27:14,275 - DEBUG - Sending servo control packet: [85, 85, 1, 3, 36, 215]
+2025-06-01 23:27:14,280 - DEBUG - Updated servo 1: position=749, temp=37°C, voltage=12398mV
+2025-06-01 23:27:14,280 - DEBUG - Sending servo control packet: [85, 85, 2, 3, 28, 222]
+2025-06-01 23:27:14,285 - DEBUG - Sending servo control packet: [85, 85, 2, 3, 26, 224]
+2025-06-01 23:27:14,290 - DEBUG - Sending servo control packet: [85, 85, 2, 3, 25, 225]
+2025-06-01 23:27:14,294 - DEBUG - Sending servo control packet: [85, 85, 2, 3, 27, 223]
+2025-06-01 23:27:14,300 - DEBUG - Sending servo control packet: [85, 85, 2, 3, 36, 214]
+2025-06-01 23:27:14,305 - DEBUG - Updated servo 2: position=750, temp=38°C, voltage=12420mV
+2025-06-01 23:27:14,305 - DEBUG - Sending servo control packet: [85, 85, 3, 3, 28, 221]
+2025-06-01 23:27:14,310 - DEBUG - Sending servo control packet: [85, 85, 3, 3, 26, 223]
+2025-06-01 23:27:14,314 - DEBUG - Sending servo control packet: [85, 85, 3, 3, 25, 224]
+2025-06-01 23:27:14,319 - DEBUG - Sending servo control packet: [85, 85, 3, 3, 27, 222]
+2025-06-01 23:27:14,323 - DEBUG - Sending servo control packet: [85, 85, 3, 3, 36, 213]
+2025-06-01 23:27:14,327 - DEBUG - Updated servo 3: position=495, temp=37°C, voltage=12420mV
+2025-06-01 23:27:14,328 - DEBUG - Sending servo control packet: [85, 85, 4, 3, 28, 220]
+2025-06-01 23:27:14,332 - DEBUG - Sending servo control packet: [85, 85, 4, 3, 26, 222]
+2025-06-01 23:27:14,337 - DEBUG - Sending servo control packet: [85, 85, 4, 3, 25, 223]
+2025-06-01 23:27:14,342 - DEBUG - Sending servo control packet: [85, 85, 4, 3, 27, 221]
+2025-06-01 23:27:14,347 - DEBUG - Sending servo control packet: [85, 85, 4, 3, 36, 212]
+2025-06-01 23:27:14,352 - DEBUG - Updated servo 4: position=392, temp=37°C, voltage=12347mV
+2025-06-01 23:27:14,352 - DEBUG - Sending servo control packet: [85, 85, 5, 3, 28, 219]
+2025-06-01 23:27:14,357 - DEBUG - Sending servo control packet: [85, 85, 5, 3, 26, 221]
+2025-06-01 23:27:14,361 - DEBUG - Sending servo control packet: [85, 85, 5, 3, 25, 222]
+2025-06-01 23:27:14,365 - DEBUG - Sending servo control packet: [85, 85, 5, 3, 27, 220]
+2025-06-01 23:27:14,371 - DEBUG - Sending servo control packet: [85, 85, 5, 3, 36, 211]
+2025-06-01 23:27:14,376 - DEBUG - Updated servo 5: position=1000, temp=36°C, voltage=12416mV
+2025-06-01 23:27:14,376 - DEBUG - Sending servo control packet: [85, 85, 6, 3, 28, 218]
+2025-06-01 23:27:14,381 - DEBUG - Sending servo control packet: [85, 85, 6, 3, 26, 220]
+2025-06-01 23:27:14,385 - DEBUG - Sending servo control packet: [85, 85, 6, 3, 25, 221]
+2025-06-01 23:27:14,390 - DEBUG - Sending servo control packet: [85, 85, 6, 3, 27, 219]
+2025-06-01 23:27:14,395 - DEBUG - Sending servo control packet: [85, 85, 6, 3, 36, 210]
+2025-06-01 23:27:14,400 - DEBUG - Updated servo 6: position=606, temp=46°C, voltage=12376mV
+2025-06-01 23:27:14,400 - DEBUG - Sending servo control packet: [85, 85, 1, 3, 28, 223]
+2025-06-01 23:27:14,405 - DEBUG - Sending servo control packet: [85, 85, 2, 3, 28, 222]
+2025-06-01 23:27:14,409 - DEBUG - Sending servo control packet: [85, 85, 3, 3, 28, 221]
+2025-06-01 23:27:14,414 - DEBUG - Sending servo control packet: [85, 85, 4, 3, 28, 220]
+2025-06-01 23:27:14,418 - DEBUG - Sending servo control packet: [85, 85, 5, 3, 28, 219]
+2025-06-01 23:27:14,423 - DEBUG - Converted positions [749, 750, 495, 392, 1000] to theta_rad [0.20309286 0.9680489  1.5616505  1.56003745 3.14159265]
+2025-06-01 23:27:14,424 - DEBUG - Updated current position: [-1.61468897e+02  2.34467867e+02  5.51091060e-15]
+2025-06-01 23:27:14,424 - DEBUG - Updated target position: [-200.  200.    0.]
+2025-06-01 23:27:14,426 - DEBUG - Sending servo control packet: [85, 85, 2, 7, 1, 238, 2, 232, 3, 26]
+2025-06-01 23:27:14,426 - INFO - Manually moved servo 2 to position 750
+2025-06-01 23:27:14,428 - DEBUG - Sending servo control packet: [85, 85, 1, 7, 1, 237, 2, 232, 3, 28]
+2025-06-01 23:27:14,428 - INFO - Manually moved servo 1 to position 749
+2025-06-01 23:27:14,940 - DEBUG - Sending servo control packet: [85, 85, 1, 3, 28, 223]
+2025-06-01 23:27:14,945 - DEBUG - Sending servo control packet: [85, 85, 1, 3, 26, 225]
+2025-06-01 23:27:14,950 - DEBUG - Sending servo control packet: [85, 85, 1, 3, 25, 226]
+2025-06-01 23:27:14,954 - DEBUG - Sending servo control packet: [85, 85, 1, 3, 27, 224]
+2025-06-01 23:27:14,960 - DEBUG - Sending servo control packet: [85, 85, 1, 3, 36, 215]
+2025-06-01 23:27:14,964 - DEBUG - Updated servo 1: position=749, temp=37°C, voltage=12420mV
+2025-06-01 23:27:14,964 - DEBUG - Sending servo control packet: [85, 85, 2, 3, 28, 222]
+2025-06-01 23:27:14,968 - DEBUG - Sending servo control packet: [85, 85, 2, 3, 26, 224]
+2025-06-01 23:27:14,975 - DEBUG - Sending servo control packet: [85, 85, 2, 3, 25, 225]
+2025-06-01 23:27:14,980 - DEBUG - Sending servo control packet: [85, 85, 2, 3, 27, 223]
+2025-06-01 23:27:14,984 - DEBUG - Sending servo control packet: [85, 85, 2, 3, 36, 214]
+2025-06-01 23:27:14,990 - DEBUG - Updated servo 2: position=749, temp=38°C, voltage=12420mV
+2025-06-01 23:27:14,990 - DEBUG - Sending servo control packet: [85, 85, 3, 3, 28, 221]
+2025-06-01 23:27:14,994 - DEBUG - Sending servo control packet: [85, 85, 3, 3, 26, 223]
+2025-06-01 23:27:14,998 - DEBUG - Sending servo control packet: [85, 85, 3, 3, 25, 224]
+2025-06-01 23:27:15,003 - DEBUG - Sending servo control packet: [85, 85, 3, 3, 27, 222]
+2025-06-01 23:27:15,008 - DEBUG - Sending servo control packet: [85, 85, 3, 3, 36, 213]
+2025-06-01 23:27:15,012 - DEBUG - Updated servo 3: position=495, temp=37°C, voltage=12420mV
+2025-06-01 23:27:15,013 - DEBUG - Sending servo control packet: [85, 85, 4, 3, 28, 220]
+2025-06-01 23:27:15,017 - DEBUG - Sending servo control packet: [85, 85, 4, 3, 26, 222]
+2025-06-01 23:27:15,022 - DEBUG - Sending servo control packet: [85, 85, 4, 3, 25, 223]
+2025-06-01 23:27:15,027 - DEBUG - Sending servo control packet: [85, 85, 4, 3, 27, 221]
+2025-06-01 23:27:15,032 - DEBUG - Sending servo control packet: [85, 85, 4, 3, 36, 212]
+2025-06-01 23:27:15,037 - DEBUG - Updated servo 4: position=392, temp=37°C, voltage=12336mV
+2025-06-01 23:27:15,037 - DEBUG - Sending servo control packet: [85, 85, 5, 3, 28, 219]
+2025-06-01 23:27:15,042 - DEBUG - Sending servo control packet: [85, 85, 5, 3, 26, 221]
+2025-06-01 23:27:15,047 - DEBUG - Sending servo control packet: [85, 85, 5, 3, 25, 222]
+2025-06-01 23:27:15,051 - DEBUG - Sending servo control packet: [85, 85, 5, 3, 27, 220]
+2025-06-01 23:27:15,056 - DEBUG - Sending servo control packet: [85, 85, 5, 3, 36, 211]
+2025-06-01 23:27:15,061 - DEBUG - Updated servo 5: position=1000, temp=36°C, voltage=12420mV
+2025-06-01 23:27:15,061 - DEBUG - Sending servo control packet: [85, 85, 6, 3, 28, 218]
+2025-06-01 23:27:15,066 - DEBUG - Sending servo control packet: [85, 85, 6, 3, 26, 220]
+2025-06-01 23:27:15,070 - DEBUG - Sending servo control packet: [85, 85, 6, 3, 25, 221]
+2025-06-01 23:27:15,075 - DEBUG - Sending servo control packet: [85, 85, 6, 3, 27, 219]
+2025-06-01 23:27:15,080 - DEBUG - Sending servo control packet: [85, 85, 6, 3, 36, 210]

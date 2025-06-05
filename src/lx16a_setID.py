@@ -12,7 +12,7 @@ try:
     
 
     # Change the ID of the servo
-    new_id = 5 # The new ID of the servo
+    new_id = 6 # The new ID of the servo
     servo.set_id(new_id) # Change the ID of the servo
     print(f"Servo ID changed to {new_id}") # Print the new ID of the servo
 
