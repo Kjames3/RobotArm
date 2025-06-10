@@ -12,6 +12,7 @@ import matplotlib.patches as patches
 from mpl_toolkits.mplot3d import Axes3D
 from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 import threading
+import queue
 
 # Try to import serial components, but make them optional
 try:
@@ -22,16 +23,24 @@ except ImportError:
     HARDWARE_AVAILABLE = False
     print("Hardware libraries not available. Running in simulation mode only.")
 
-# Configure logging
-logging.basicConfig(
-    level=logging.DEBUG,
-    format='%(asctime)s - %(levelname)s - %(message)s',
-    handlers=[
-        logging.FileHandler('robot_arm_log.txt'),
-        logging.StreamHandler()
-    ]
-)
+# Configure logging with different levels for file vs console
+file_handler = logging.FileHandler('robot_arm_log.txt')
+file_handler.setLevel(logging.DEBUG)
+
+console_handler = logging.StreamHandler()
+console_handler.setLevel(logging.INFO)  # Less verbose for console
+
+formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+file_handler.setFormatter(formatter)
+console_handler.setFormatter(formatter)
+
 logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
+logger.addHandler(file_handler)
+logger.addHandler(console_handler)
+
+# Prevent log messages from being propagated to the root logger
+logger.propagate = False
 
 # Constants
 SERIAL_PORT: str = "COM4"
@@ -54,6 +63,10 @@ DH_PARAMS: List[Tuple[float, float, float, float]] = [
     (0, 0, 0, np.pi/2),     # Joint 4: Wrist tilt  
     (0, LINK_LENGTHS[2], 0, 0)   # Joint 5: Wrist rotation
 ]
+
+# Add caching for IK solutions
+IK_CACHE = {}
+IK_CACHE_SIZE = 100  # Limit cache size to avoid memory issues
 
 class MockServoController:
     """Mock servo controller for simulation mode."""
@@ -231,9 +244,19 @@ def inverse_kinematics_improved(
     target_orient: np.ndarray = np.array([0, 0, -1]),
     max_iter: int = 500,
     tol: float = 1e-3,
-    step_size: float = 0.05
+    step_size: float = 0.05,
+    use_cache: bool = True
 ) -> List[float]:
     """Improved inverse kinematics solver for 6-DOF robot arm."""
+
+    # Round target position to reduce cache variations
+    cache_key = tuple(np.round(target_pos, 2))
+
+    # Check cache first
+    if use_cache and cache_key in IK_CACHE:
+        logger.info("Using cached IK solution for target position %s", target_pos)
+        return IK_CACHE[cache_key]
+    
     logger.info("Starting improved IK solver for target position %s", target_pos)
     
     if not check_reachability(target_pos):
@@ -345,6 +368,13 @@ def inverse_kinematics_improved(
                 *np.degrees(theta_rad))
     logger.info("Final servo positions: %s", [int(p) for p in final_positions])
     
+    # Store result in cache
+    if use_cache:
+        if len(IK_CACHE) >= IK_CACHE_SIZE:
+            # Remove oldest entry
+            IK_CACHE.pop(next(iter(IK_CACHE)))
+        IK_CACHE[cache_key] = final_positions
+    
     return final_positions
 
 def return_to_home() -> None:
@@ -378,7 +408,6 @@ class RobotVisualizer:
         
         # Initialize plot
         self.setup_plot()
-        self.target_point = None
         
     def setup_plot(self):
         """Setup the 3D plot."""
@@ -392,6 +421,25 @@ class RobotVisualizer:
         
         # Set viewing angle
         self.ax.view_init(elev=20, azim=45)
+        
+        # Create persistent objects for faster updates
+        colors = ['red', 'green', 'blue', 'orange', 'purple']
+        self.link_lines = [self.ax.plot([], [], [], 'o-', lw=2, color=colors[i % len(colors)])[0] 
+                          for i in range(5)]
+        self.joint_points = [self.ax.plot([], [], [], 'o', ms=8, color=colors[i % len(colors)])[0] 
+                            for i in range(6)]
+        self.target_point = self.ax.plot([], [], [], 'r*', ms=15)[0]
+        
+        # Draw workspace boundary (only once)
+        max_reach = sum(LINK_LENGTHS)
+        theta = np.linspace(0, 2*np.pi, 50)
+        x_circle = max_reach * np.cos(theta)
+        y_circle = max_reach * np.sin(theta)
+        z_circle = np.zeros_like(theta)
+        self.ax.plot(x_circle, y_circle, z_circle, 'k--', alpha=0.3, label='Max Reach')
+        
+        # Draw base (only once)
+        self.ax.scatter(0, 0, 0, color='gray', s=200, marker='o', alpha=1.0)
         
     def draw_cylinder(self, start, end, radius=10, color='blue', alpha=0.7):
         """Draw a cylinder between two points."""
@@ -427,10 +475,7 @@ class RobotVisualizer:
                        c=color, alpha=alpha, s=1)
     
     def draw_robot(self, joint_positions: List[float], target_pos: Optional[np.ndarray] = None):
-        """Draw the robot arm based on joint positions."""
-        self.ax.clear()
-        self.setup_plot()
-        
+        """Draw the robot arm based on joint positions using optimized updates."""
         # Convert positions to angles
         theta_rad = positions_to_radians_improved(joint_positions[:5])
         
@@ -438,54 +483,48 @@ class RobotVisualizer:
         _, transforms = forward_kinematics(theta_rad)
         
         # Extract joint positions
-        joint_coords = []
-        for T in transforms:
-            joint_coords.append(T[:3, 3])
+        joint_coords = [T[:3, 3] for T in transforms]
         
-        # Draw links
-        colors = ['red', 'green', 'blue', 'orange', 'purple']
-        for i in range(len(joint_coords) - 1):
-            start = joint_coords[i]
-            end = joint_coords[i + 1]
-            
-            # Draw link as line
-            self.ax.plot([start[0], end[0]], 
-                        [start[1], end[1]], 
-                        [start[2], end[2]], 
-                        color=colors[i % len(colors)], linewidth=8, alpha=0.8)
-            
-            # Draw joint as sphere
-            self.ax.scatter(start[0], start[1], start[2], 
-                           color=colors[i % len(colors)], s=100, alpha=0.9)
+        # Update link lines and joint points
+        for i, line in enumerate(self.link_lines):
+            if i < len(joint_coords) - 1:
+                start = joint_coords[i]
+                end = joint_coords[i+1]
+                x_data = [start[0], end[0]]
+                y_data = [start[1], end[1]]
+                z_data = [start[2], end[2]]
+                line.set_data(x_data, y_data)
+                line.set_3d_properties(z_data)
         
-        # Draw end effector
-        if joint_coords:
-            end_pos = joint_coords[-1]
-            self.ax.scatter(end_pos[0], end_pos[1], end_pos[2], 
-                           color='black', s=150, marker='s', alpha=1.0)
+        # Update joint positions
+        for i, point in enumerate(self.joint_points):
+            if i < len(joint_coords):
+                point.set_data([joint_coords[i][0]], [joint_coords[i][1]])
+                point.set_3d_properties([joint_coords[i][2]])
+            else:
+                point.set_data([], [])
+                point.set_3d_properties([])
         
-        # Draw target position if provided
+        # Update target position
         if target_pos is not None:
-            self.ax.scatter(target_pos[0], target_pos[1], target_pos[2], 
-                           color='red', s=200, marker='*', alpha=1.0, label='Target')
-            self.ax.legend()
+            self.target_point.set_data([target_pos[0]], [target_pos[1]])
+            self.target_point.set_3d_properties([target_pos[2]])
+        else:
+            self.target_point.set_data([], [])
+            self.target_point.set_3d_properties([])
         
-        # Draw base
-        self.ax.scatter(0, 0, 0, color='gray', s=200, marker='o', alpha=1.0)
-        
-        # Draw workspace boundary (simplified)
-        max_reach = sum(LINK_LENGTHS)
-        theta = np.linspace(0, 2*np.pi, 50)
-        x_circle = max_reach * np.cos(theta)
-        y_circle = max_reach * np.sin(theta)
-        z_circle = np.zeros_like(theta)
-        self.ax.plot(x_circle, y_circle, z_circle, 'k--', alpha=0.3, label='Max Reach')
-        
-        self.canvas.draw()
+        # Only draw canvas once - much more efficient
+        self.canvas.draw_idle()
     
     def update_target(self, target_pos: np.ndarray):
         """Update target position visualization."""
-        self.target_point = target_pos
+        if target_pos is not None:
+            self.target_point.set_data([target_pos[0]], [target_pos[1]])
+            self.target_point.set_3d_properties([target_pos[2]])
+        else:
+            self.target_point.set_data([], [])
+            self.target_point.set_3d_properties([])
+        self.canvas.draw_idle()
 
 class RobotArmGUI:
     def __init__(self, root: tk.Tk):
@@ -499,6 +538,11 @@ class RobotArmGUI:
         self.manual_control = [False] * SERVO_COUNT
         self.simulation_mode = not HARDWARE_AVAILABLE or isinstance(controller, MockServoController)
         
+        # Initialize movement queue and worker thread
+        self.movement_queue = queue.Queue()
+        self.worker_thread = threading.Thread(target=self.movement_worker, daemon=True)
+        self.worker_thread.start()
+        
         # Create main layout
         self.create_layout()
         self.create_control_frames()
@@ -507,6 +551,49 @@ class RobotArmGUI:
         
         # Start periodic updates
         self.update_gui()
+        
+    def movement_worker(self):
+        """Background thread for processing movement commands."""
+        while True:
+            try:
+                # Get next movement task
+                task = self.movement_queue.get()
+                if task is None:  # Shutdown signal
+                    break
+                    
+                target_pos, gripper_open = task
+                
+                # Perform IK calculation
+                positions = inverse_kinematics_improved(target_pos)
+                
+                # Move servos
+                if hasattr(controller, 'group_move'):
+                    controller.group_move(list(range(1, 6)), [int(pos) for pos in positions], MOVE_TIME)
+                else:
+                    for i, pos in enumerate(positions, 1):
+                        controller.move(i, int(pos), MOVE_TIME)
+                
+                # Handle gripper
+                gripper_pos = GRIPPER_POS[0] if gripper_open else GRIPPER_POS[1]
+                controller.move(6, gripper_pos, MOVE_TIME)
+                
+                # Wait for movement to complete without blocking GUI
+                time.sleep(MOVE_TIME / 1000 + 0.1)
+                
+                # Update GUI state from worker thread
+                self.root.after(0, self._set_movement_complete)
+                
+            except Exception as e:
+                logger.error("Movement worker error: %s", e)
+                # Update GUI state from worker thread on error
+                self.root.after(0, self._set_movement_complete)
+            finally:
+                self.movement_queue.task_done()
+                
+    def _set_movement_complete(self):
+        """Helper method to safely update GUI state from worker thread."""
+        self.is_moving = False
+        logger.info("Movement completed")
     
     def create_layout(self):
         """Create the main layout with control panel and visualization."""
@@ -671,6 +758,7 @@ class RobotArmGUI:
     
     def update_gui(self):
         """Update GUI with real-time servo and position data."""
+        start_time = time.time()
         try:
             # Get current servo positions for visualization
             current_positions = []
@@ -750,8 +838,11 @@ class RobotArmGUI:
         except Exception as e:
             logger.error("Error updating GUI: %s", e)
         
-        # Schedule next update
-        self.root.after(500, self.update_gui)
+        # Adaptive update rate based on processing time
+        elapsed = time.time() - start_time
+        update_interval = max(100, min(500, int(100 / elapsed * 100))) if elapsed > 0 else 500
+        logger.debug("GUI update took %.3f seconds, next update in %d ms", elapsed, update_interval)
+        self.root.after(update_interval, self.update_gui)
     
     def on_slider_move(self, servo_id: int, position: str):
         """Handle manual slider movement to control servo position."""
@@ -775,48 +866,18 @@ class RobotArmGUI:
             x = float(self.x_entry.get())
             y = float(self.y_entry.get())
             z = float(self.z_entry.get())
-            self.target_pos = np.array([x, y, z])
-            logger.info("Attempting to move to position: %s", self.target_pos)
+            target_pos = np.array([x, y, z])
+            logger.info("Attempting to move to position: %s", target_pos)
             
             # Check reachability before attempting move
-            if not check_reachability(self.target_pos):
+            if not check_reachability(target_pos):
                 messagebox.showwarning("Warning", "Target position may be unreachable!")
             
             self.is_moving = True
-            
-            # Use the improved IK solver
-            positions = inverse_kinematics_improved(self.target_pos)
-            
-            # Move servos using group move if available, otherwise individual moves
-            try:
-                if hasattr(controller, 'group_move'):
-                    controller.group_move(list(range(1, 6)), [int(pos) for pos in positions], MOVE_TIME)
-                else:
-                    for i, pos in enumerate(positions, 1):
-                        controller.move(i, int(pos), MOVE_TIME)
-                        logger.debug("Moving servo %d to position %d", i, int(pos))
-            except Exception as e:
-                logger.error("Error during servo movement: %s", e)
-                # Fallback to individual moves
-                for i, pos in enumerate(positions, 1):
-                    try:
-                        controller.move(i, int(pos), MOVE_TIME)
-                        logger.debug("Moving servo %d to position %d", i, int(pos))
-                    except Exception as servo_e:
-                        logger.error("Failed to move servo %d: %s", i, servo_e)
-            
-            # Handle gripper
-            gripper_pos = GRIPPER_POS[0] if self.gripper_var.get() else GRIPPER_POS[1]
-            try:
-                controller.move(6, gripper_pos, MOVE_TIME)
-                logger.debug("Set gripper to position %d", gripper_pos)
-            except Exception as e:
-                logger.error("Failed to move gripper: %s", e)
-            
-            # Wait for movement to complete
-            time.sleep(MOVE_TIME / 1000 + 0.5)  # Add small buffer
-            self.is_moving = False
-            logger.info("Movement completed")
+            self.target_pos = target_pos
+
+            # Queue the movement task - this is all we need now
+            self.movement_queue.put((self.target_pos, self.gripper_var.get()))
             
         except ValueError as e:
             logger.error("Invalid input values: %s", e)
@@ -849,7 +910,8 @@ class RobotArmGUI:
         self.y_entry.insert(0, f"{y:.1f}")
         self.z_entry.delete(0, tk.END)
         self.z_entry.insert(0, f"{z:.1f}")
-        self.gripper_var.set(np.random.choice([True, False]))
+        # Convert NumPy boolean to Python boolean to avoid Tkinter error
+        self.gripper_var.set(bool(np.random.choice([True, False])))
         logger.info("Generated random position: (%.1f, %.1f, %.1f)", x, y, z)
 
 def main():

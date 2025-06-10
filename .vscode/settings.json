@@ -2,5 +2,6 @@
     "cSpell.words": [
         "lewansoul",
         "serialutil"
-    ]
+    ],
+    "zencoder.enableRepoIndexing": true
 }
