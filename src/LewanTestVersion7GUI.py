@@ -57,11 +57,12 @@ POS_RANGES: List[Tuple[int, int]] = [
 LINK_LENGTHS: Tuple[float, float, float] = (150.0, 150.0, 90.0)  # L2, L3, L4 in mm
 GRIPPER_POS: Tuple[int, int] = (288, 607)  # Open, Closed
 DH_PARAMS: List[Tuple[float, float, float, float]] = [
-    (0, 0, 0, 0),           # Joint 1: Base rotation
-    (0, 0, LINK_LENGTHS[0], 0),  # Joint 2: Shoulder
-    (0, 0, LINK_LENGTHS[1], 0),  # Joint 3: Elbow
-    (0, 0, 0, np.pi/2),     # Joint 4: Wrist tilt  
-    (0, LINK_LENGTHS[2], 0, 0)   # Joint 5: Wrist rotation
+    (0, 50, 0, np.pi/2),          # Joint 1: Base rotation (vertical axis) with base height
+    (0, 0, 0, np.pi/2),           # Joint 2: Shoulder (vertical movement)
+    (0, 0, LINK_LENGTHS[0], 0),   # Joint 3: Upper arm (horizontal when shoulder at 0)
+    (0, 0, LINK_LENGTHS[1], 0),   # Joint 4: Forearm (horizontal movement)
+    (0, 0, 0, np.pi/2),           # Joint 5: Wrist tilt (vertical axis)
+    (0, LINK_LENGTHS[2], 0, 0)    # Joint 6: End effector offset
 ]
 
 # Add caching for IK solutions
@@ -147,7 +148,9 @@ def forward_kinematics(theta_rad: np.ndarray) -> Tuple[np.ndarray, List[np.ndarr
     transforms = [T.copy()]  # Base transform
     
     for i, (theta, d, a, alpha) in enumerate(DH_PARAMS):
-        T_joint = dh_transform(theta_rad[i] if i < 5 else 0, d, a, alpha)
+        # Use joint angle for first 5 joints, 0 for the end effector offset
+        joint_angle = theta_rad[i] if i < len(theta_rad) else 0
+        T_joint = dh_transform(joint_angle + theta, d, a, alpha)
         T = T @ T_joint
         transforms.append(T.copy())
     
@@ -157,18 +160,29 @@ def positions_to_radians_improved(positions: List[float]) -> np.ndarray:
     """Improved conversion from servo positions to joint angles in radians."""
     theta_rad = np.zeros(len(positions))
     
+    # Home positions for reference (vertical arm configuration)
+    home_positions = [705, 865, 430, 100, 500]
+    
     for i, pos in enumerate(positions):
         pos_min, pos_max = POS_RANGES[i]
+        home_pos = home_positions[i] if i < len(home_positions) else (pos_min + pos_max) / 2
         
         if i == 0:  # Base rotation (Joint 1) - Full 360 degrees
             # Map servo range to -180 to +180 degrees
             theta_deg = -180 + (pos - pos_min) / (pos_max - pos_min) * 360
-        elif i == 1:  # Shoulder (Joint 2) - Typical range -90 to +90
-            # Map servo range to reasonable shoulder movement
-            theta_deg = -90 + (pos - pos_min) / (pos_max - pos_min) * 180
-        elif i == 2:  # Elbow (Joint 3) - Typical range -90 to +90  
-            # Map servo range to reasonable elbow movement
-            theta_deg = -90 + (pos - pos_min) / (pos_max - pos_min) * 180
+        elif i == 1:  # Shoulder (Joint 2) - Vertical movement
+            # Home position should be vertical (90 degrees), map around that
+            # When servo is at home_pos, arm should be vertical (90 degrees)
+            normalized_pos = (pos - home_pos) / (pos_max - pos_min) * 180
+            theta_deg = 90 + normalized_pos  # Start vertical, move from there
+        elif i == 2:  # Upper arm (Joint 3) - Should be straight up when shoulder is vertical
+            # Home position should be straight up (90 degrees), map around that
+            normalized_pos = (pos - home_pos) / (pos_max - pos_min) * 180
+            theta_deg = 90 + normalized_pos  # 90 degrees = straight up, 0 = horizontal
+        elif i == 3:  # Forearm (Joint 4) - Bend from straight
+            # Home position should be straight (0 degrees), map around that
+            normalized_pos = (pos - home_pos) / (pos_max - pos_min) * 180
+            theta_deg = normalized_pos  # 0 degrees = straight, positive = bend
         elif i == 3:  # Wrist tilt (Joint 4) - Pitch movement
             # Map servo range to wrist pitch
             theta_deg = -90 + (pos - pos_min) / (pos_max - pos_min) * 180
@@ -187,18 +201,30 @@ def radians_to_positions_improved(theta_rad: np.ndarray) -> List[float]:
     """Improved conversion from joint angles in radians to servo positions."""
     positions = []
     
+    # Home positions for reference (vertical arm configuration)
+    home_positions = [705, 865, 430, 100, 500]
+    
     for i, theta in enumerate(theta_rad):
         theta_deg = np.degrees(theta)
         pos_min, pos_max = POS_RANGES[i]
+        home_pos = home_positions[i] if i < len(home_positions) else (pos_min + pos_max) / 2
         
         if i == 0:  # Base rotation
             # Normalize to -180 to +180 range
             theta_deg = ((theta_deg + 180) % 360) - 180
             pos = pos_min + (theta_deg + 180) / 360 * (pos_max - pos_min)
-        elif i == 1:  # Shoulder
-            pos = pos_min + (theta_deg + 90) / 180 * (pos_max - pos_min)
-        elif i == 2:  # Elbow
-            pos = pos_min + (theta_deg + 90) / 180 * (pos_max - pos_min)
+        elif i == 1:  # Shoulder - reverse the mapping from positions_to_radians_improved
+            # theta_deg = 90 + normalized_pos, so normalized_pos = theta_deg - 90
+            normalized_pos = theta_deg - 90
+            # Clamp normalized_pos to reasonable range to avoid servo limits
+            normalized_pos = np.clip(normalized_pos, -90, 90)
+            pos = home_pos + normalized_pos / 180 * (pos_max - pos_min)
+        elif i == 2:  # Elbow - reverse the mapping from positions_to_radians_improved
+            # theta_deg = normalized_pos, so normalized_pos = theta_deg
+            normalized_pos = theta_deg
+            # Clamp normalized_pos to reasonable range to avoid servo limits
+            normalized_pos = np.clip(normalized_pos, -90, 90)
+            pos = home_pos + normalized_pos / 180 * (pos_max - pos_min)
         elif i == 3:  # Wrist tilt
             pos = pos_min + (theta_deg + 90) / 180 * (pos_max - pos_min)
         elif i == 4:  # Wrist rotation
@@ -398,7 +424,17 @@ def return_to_home() -> None:
                 logger.error("Failed to move servo %d: %s", i, e)
 
 class RobotVisualizer:
-    """3D visualization of the robot arm using matplotlib."""
+    """
+    3D visualization of the robot arm using matplotlib.
+    
+    FIXED: Previously only showed base link and first 2 arm joints. Now properly displays:
+    - All 6 links (base to joint1, joint1 to joint2, joint2 to joint3, joint3 to joint4, joint4 to joint5, joint5 to end effector)
+    - All 7 joint positions (base + 6 joints)
+    - Wrist joint with special magenta square marker
+    - End effector with special red triangle marker
+    - Animated gripper jaws that open/close based on servo 6 position
+    - Color-coded links and joints for easy identification
+    """
     
     def __init__(self, parent_frame):
         self.fig = Figure(figsize=(8, 6), dpi=100)
@@ -423,12 +459,23 @@ class RobotVisualizer:
         self.ax.view_init(elev=20, azim=45)
         
         # Create persistent objects for faster updates
-        colors = ['red', 'green', 'blue', 'orange', 'purple']
+        colors = ['red', 'green', 'blue', 'orange', 'purple', 'cyan']
+        # Create link lines for all joints (6 links: base to joint1, joint1 to joint2, ..., joint5 to end effector)
         self.link_lines = [self.ax.plot([], [], [], 'o-', lw=2, color=colors[i % len(colors)])[0] 
-                          for i in range(5)]
+                          for i in range(6)]
         self.joint_points = [self.ax.plot([], [], [], 'o', ms=8, color=colors[i % len(colors)])[0] 
-                            for i in range(6)]
+                            for i in range(7)]  # 7 points: base + 6 joints
         self.target_point = self.ax.plot([], [], [], 'r*', ms=15)[0]
+        
+        # Add gripper visualization
+        self.gripper_lines = [self.ax.plot([], [], [], '-', lw=4, color='darkred', label='Gripper')[0] for _ in range(2)]
+        
+        # Add special markers for important joints
+        self.wrist_marker = self.ax.plot([], [], [], 's', ms=12, color='magenta', label='Wrist Joint')[0]  # Square marker for wrist
+        self.end_effector_marker = self.ax.plot([], [], [], '^', ms=10, color='red', label='End Effector')[0]  # Triangle for end effector
+        
+        # Add legend
+        self.ax.legend(loc='upper right')
         
         # Draw workspace boundary (only once)
         max_reach = sum(LINK_LENGTHS)
@@ -485,7 +532,7 @@ class RobotVisualizer:
         # Extract joint positions
         joint_coords = [T[:3, 3] for T in transforms]
         
-        # Update link lines and joint points
+        # Update link lines - draw all links including the end effector
         for i, line in enumerate(self.link_lines):
             if i < len(joint_coords) - 1:
                 start = joint_coords[i]
@@ -495,6 +542,10 @@ class RobotVisualizer:
                 z_data = [start[2], end[2]]
                 line.set_data(x_data, y_data)
                 line.set_3d_properties(z_data)
+            else:
+                # Clear unused lines
+                line.set_data([], [])
+                line.set_3d_properties([])
         
         # Update joint positions
         for i, point in enumerate(self.joint_points):
@@ -504,6 +555,77 @@ class RobotVisualizer:
             else:
                 point.set_data([], [])
                 point.set_3d_properties([])
+        
+        # Update special markers for wrist and end effector
+        if len(joint_coords) >= 6:  # We have at least the wrist joint
+            # Wrist joint (joint 5, transform index 5)
+            wrist_pos = joint_coords[5]
+            self.wrist_marker.set_data([wrist_pos[0]], [wrist_pos[1]])
+            self.wrist_marker.set_3d_properties([wrist_pos[2]])
+            
+            # End effector (joint 6, transform index 6)
+            if len(joint_coords) >= 7:
+                end_effector_pos = joint_coords[6]
+                self.end_effector_marker.set_data([end_effector_pos[0]], [end_effector_pos[1]])
+                self.end_effector_marker.set_3d_properties([end_effector_pos[2]])
+            else:
+                self.end_effector_marker.set_data([], [])
+                self.end_effector_marker.set_3d_properties([])
+        else:
+            # Clear special markers if not enough joints
+            self.wrist_marker.set_data([], [])
+            self.wrist_marker.set_3d_properties([])
+            self.end_effector_marker.set_data([], [])
+            self.end_effector_marker.set_3d_properties([])
+        
+        # Draw gripper at end effector position
+        if len(joint_coords) > 0:
+            end_effector_pos = joint_coords[-1]  # Last joint position (end effector)
+            end_effector_transform = transforms[-1]  # End effector transformation matrix
+            
+            # Get orientation from transformation matrix
+            x_axis = end_effector_transform[:3, 0]  # X-axis direction
+            y_axis = end_effector_transform[:3, 1]  # Y-axis direction
+            z_axis = end_effector_transform[:3, 2]  # Z-axis direction
+            
+            # Draw gripper jaws
+            gripper_length = 20.0  # Length of gripper jaws
+            gripper_width = 15.0   # Width between jaws
+            
+            # Calculate gripper opening based on servo 6 position
+            if len(joint_positions) > 5:
+                gripper_servo_pos = joint_positions[5]
+                gripper_min, gripper_max = GRIPPER_POS
+                # Normalize gripper position (0 = closed, 1 = open)
+                gripper_opening = (gripper_servo_pos - gripper_min) / (gripper_max - gripper_min)
+                gripper_opening = np.clip(gripper_opening, 0, 1)
+                actual_gripper_width = gripper_width * (0.3 + 0.7 * gripper_opening)  # 30% to 100% opening
+            else:
+                actual_gripper_width = gripper_width * 0.5  # Default 50% opening
+            
+            # Calculate gripper jaw positions
+            jaw_offset = y_axis * (actual_gripper_width / 2)
+            jaw_tip_offset = z_axis * gripper_length
+            
+            # Left jaw
+            jaw1_base = end_effector_pos + jaw_offset
+            jaw1_tip = jaw1_base + jaw_tip_offset
+            
+            # Right jaw  
+            jaw2_base = end_effector_pos - jaw_offset
+            jaw2_tip = jaw2_base + jaw_tip_offset
+            
+            # Update gripper line visualization
+            self.gripper_lines[0].set_data([jaw1_base[0], jaw1_tip[0]], [jaw1_base[1], jaw1_tip[1]])
+            self.gripper_lines[0].set_3d_properties([jaw1_base[2], jaw1_tip[2]])
+            
+            self.gripper_lines[1].set_data([jaw2_base[0], jaw2_tip[0]], [jaw2_base[1], jaw2_tip[1]])
+            self.gripper_lines[1].set_3d_properties([jaw2_base[2], jaw2_tip[2]])
+        else:
+            # Clear gripper lines if no joint coordinates
+            for line in self.gripper_lines:
+                line.set_data([], [])
+                line.set_3d_properties([])
         
         # Update target position
         if target_pos is not None:
@@ -914,6 +1036,38 @@ class RobotArmGUI:
         self.gripper_var.set(bool(np.random.choice([True, False])))
         logger.info("Generated random position: (%.1f, %.1f, %.1f)", x, y, z)
 
+def test_vertical_configuration():
+    """Test function to verify the robot displays vertically in home position."""
+    print("Testing vertical configuration...")
+    
+    # Home positions
+    home_positions = [705, 865, 430, 100, 500]
+    
+    # Convert to radians
+    theta_rad = positions_to_radians_improved(home_positions)
+    print(f"Home joint angles (degrees): {np.degrees(theta_rad)}")
+    
+    # Get forward kinematics
+    T, transforms = forward_kinematics(theta_rad)
+    
+    # Print joint positions
+    print("Joint positions in home configuration:")
+    for i, transform in enumerate(transforms):
+        pos = transform[:3, 3]
+        print(f"Joint {i}: ({pos[0]:.1f}, {pos[1]:.1f}, {pos[2]:.1f})")
+    
+    # Check if the arm is vertical (all joints should have similar X,Y coordinates when vertical)
+    end_effector_pos = T[:3, 3]
+    print(f"End effector position: ({end_effector_pos[0]:.1f}, {end_effector_pos[1]:.1f}, {end_effector_pos[2]:.1f})")
+    
+    # For a vertical arm, X and Y should be close to 0, Z should be positive
+    if abs(end_effector_pos[0]) < 50 and abs(end_effector_pos[1]) < 50 and end_effector_pos[2] > 200:
+        print("✓ Robot appears to be in vertical configuration")
+    else:
+        print("✗ Robot does not appear to be vertical")
+    
+    return theta_rad, transforms
+
 def main():
     """Main function to launch GUI."""
     logger.info("Starting robot arm GUI application")
@@ -944,4 +1098,6 @@ def main():
         sys.exit(1)
 
 if __name__ == "__main__":
+    # Test the vertical configuration first
+    test_vertical_configuration()
     main()
