@@ -17,6 +17,9 @@ import rclpy
 from rclpy.node import Node
 from sensor_msgs.msg import JointState
 
+# Import subprocesses module to launch Rviz and IsaacSim from GUI
+import subprocess
+
 # Try to import serial components, but make them optional
 try:
     import serial
@@ -643,6 +646,7 @@ class RobotArmGUI(Node):
         self.create_servo_frame() 
         self.create_position_frame()
         self.create_ik_equation_frame()
+        self.create_launch_frame()
     
     def create_input_frame(self):
         """Create input fields for target position and gripper state."""
@@ -738,6 +742,110 @@ class RobotArmGUI(Node):
         
         self.ik_label = ttk.Label(frame, text="θ1=0°, θ2=0°, θ3=0°, θ4=0°, θ5=0°", font=('Courier', 10))
         self.ik_label.pack(anchor="w")
+    
+    def create_launch_frame(self):
+        """Create frame with buttons to launch external applications."""
+        frame = ttk.LabelFrame(self.control_frame, text="External Applications", padding=10)
+        frame.pack(pady=5, fill="x")
+        
+        button_frame = ttk.Frame(frame)
+        button_frame.pack(fill="x")
+        
+        # Rviz launch button
+        rviz_button = ttk.Button(button_frame, text="Launch Rviz", command=self.launch_rviz)
+        rviz_button.pack(side=tk.LEFT, padx=5, pady=5)
+        
+        # Isaac Sim launch button
+        isaac_button = ttk.Button(button_frame, text="Launch Isaac Sim", command=self.launch_isaac_sim)
+        isaac_button.pack(side=tk.LEFT, padx=5, pady=5)
+    
+    def launch_rviz(self):
+        """Launch Rviz in a new terminal window."""
+        try:
+            # Try multiple terminal options to avoid snap conflicts
+            terminal_commands = [
+                # Try x-terminal-emulator first (system default)
+                ['x-terminal-emulator', '-e', 'bash', '-c', 
+                 'cd && cd SO-ARM101_MoveIt_IsaacSim && source install/setup.bash && echo "Starting Rviz with MoveIt..." && ros2 launch so_arm_moveit_config demo.launch.py; echo "Rviz closed. Press Enter to exit."; read'],
+                
+                # Try xterm as fallback
+                ['xterm', '-e', 'bash', '-c', 
+                 'cd && cd SO-ARM101_MoveIt_IsaacSim && source install/setup.bash && echo "Starting Rviz with MoveIt..." && ros2 launch so_arm_moveit_config demo.launch.py; echo "Rviz closed. Press Enter to exit."; read'],
+                
+                # Try konsole (KDE terminal)
+                ['konsole', '-e', 'bash', '-c', 
+                 'cd && cd SO-ARM101_MoveIt_IsaacSim && source install/setup.bash && echo "Starting Rviz with MoveIt..." && ros2 launch so_arm_moveit_config demo.launch.py; echo "Rviz closed. Press Enter to exit."; read'],
+                
+                # Try gnome-terminal with different approach (avoiding snap conflicts)
+                ['/usr/bin/gnome-terminal', '--wait', '--', 'bash', '-c', 
+                 'cd && cd SO-ARM101_MoveIt_IsaacSim && source install/setup.bash && echo "Starting Rviz with MoveIt..." && ros2 launch so_arm_moveit_config demo.launch.py; echo "Rviz closed. Press Enter to exit."; read']
+            ]
+            
+            success = False
+            for cmd in terminal_commands:
+                try:
+                    subprocess.Popen(cmd)
+                    success = True
+                    logger.info("Launched Rviz using: %s", cmd[0])
+                    break
+                except FileNotFoundError:
+                    continue
+                except Exception as e:
+                    logger.debug("Failed to launch with %s: %s", cmd[0], e)
+                    continue
+            
+            if success:
+                messagebox.showinfo("Launch Success", "Rviz launched in new terminal window")
+            else:
+                raise Exception("No suitable terminal emulator found")
+                
+        except Exception as e:
+            logger.error("Failed to launch Rviz: %s", e)
+            messagebox.showerror("Launch Error", f"Failed to launch Rviz: {e}\n\nTry installing xterm: sudo apt install xterm")
+    
+    def launch_isaac_sim(self):
+        """Launch Isaac Sim in a new terminal window."""
+        try:
+            # Try multiple terminal options to avoid snap conflicts
+            terminal_commands = [
+                # Try x-terminal-emulator first (system default)
+                ['x-terminal-emulator', '-e', 'bash', '-c', 
+                 'echo "Launching Isaac Sim..." && isaac-sim.sh; echo "Isaac Sim closed. Press Enter to exit."; read'],
+                
+                # Try xterm as fallback
+                ['xterm', '-e', 'bash', '-c', 
+                 'echo "Launching Isaac Sim..." && isaac-sim.sh; echo "Isaac Sim closed. Press Enter to exit."; read'],
+                
+                # Try konsole (KDE terminal)
+                ['konsole', '-e', 'bash', '-c', 
+                 'echo "Launching Isaac Sim..." && isaac-sim.sh; echo "Isaac Sim closed. Press Enter to exit."; read'],
+                
+                # Try gnome-terminal with different approach (avoiding snap conflicts)
+                ['/usr/bin/gnome-terminal', '--wait', '--', 'bash', '-c', 
+                 'echo "Launching Isaac Sim..." && isaac-sim.sh; echo "Isaac Sim closed. Press Enter to exit."; read']
+            ]
+            
+            success = False
+            for cmd in terminal_commands:
+                try:
+                    subprocess.Popen(cmd)
+                    success = True
+                    logger.info("Launched Isaac Sim using: %s", cmd[0])
+                    break
+                except FileNotFoundError:
+                    continue
+                except Exception as e:
+                    logger.debug("Failed to launch with %s: %s", cmd[0], e)
+                    continue
+            
+            if success:
+                messagebox.showinfo("Launch Success", "Isaac Sim launched in new terminal window")
+            else:
+                raise Exception("No suitable terminal emulator found")
+                
+        except Exception as e:
+            logger.error("Failed to launch Isaac Sim: %s", e)
+            messagebox.showerror("Launch Error", f"Failed to launch Isaac Sim: {e}\n\nTry installing xterm: sudo apt install xterm")
     
     def update_gui(self):
         """Update GUI with real-time servo and position data."""
