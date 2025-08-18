@@ -1,6 +1,6 @@
 # RobotArm
 
-![Robot Arm Demo](https://via.placeholder.com/600x400?text=Robot+Arm+Demo+Image) <!-- Replace with actual screenshot -->
+![Robot Arm Demo](https://via.placeholder.com/600x400?text=Robot+Arm+Demo+Image) (No video currently)
 
 A robotic arm control system built with an Debug board, Python and ROS [Humble]. This project enables precise control of an multi-axis robotic arm for applications in education, research, and automation.
 
@@ -25,7 +25,7 @@ A robotic arm control system built with an Debug board, Python and ROS [Humble].
 
 ## 💻 Software Requirements
 
-- **Firmware**: [e.g., Arduino IDE, PlatformIO]
+- **Firmware**: Can run project using Windows / Linux
 - **Control Software**: [Python 3.10, ROS Humble]
 - **Libraries**:
   - [Servo.h, PyGame, OpenCV, Pytorch, Numpy, ...]
@@ -37,4 +37,7 @@ A robotic arm control system built with an Debug board, Python and ROS [Humble].
    ```bash
    git clone https://github.com/Kjames3/RobotArm.git
    cd RobotArm
+
+2. **Navidate to the src folder**:
+   
   
