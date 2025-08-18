@@ -39,5 +39,17 @@ A robotic arm control system built with an Debug board, Python and ROS [Humble].
    cd RobotArm
 
 2. **Navidate to the src folder**:
+  ```bash
+  cd src
+  ```
+
+3. **Run the latest GUI version**:
+  ```bash
+  python ./LewanTestVersion7GUI.py
+  ```
+
+
+
+
    
   
