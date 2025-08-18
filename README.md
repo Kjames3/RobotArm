@@ -34,9 +34,10 @@ A robotic arm control system built with an Debug board, Python and ROS [Humble].
 ## 📦 Installation
 
 1. **Clone the repository**:
-   ```bash
-   git clone https://github.com/Kjames3/RobotArm.git
-   cd RobotArm
+  ```bash
+  git clone https://github.com/Kjames3/RobotArm.git
+  cd RobotArm
+  ```
 
 2. **Navidate to the src folder**:
   ```bash
