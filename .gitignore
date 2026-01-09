@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Logs
+*.log
+log*.txt
+robot_arm_debug*.txt
+*.prof
+
+# OS
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# IDE
+.vscode/
+.idea/
+
+# Virtual Env
+venv/
+env/
+.env
+
+# Project specific
+x000.txt
